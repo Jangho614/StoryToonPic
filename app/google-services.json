@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140103544892",
+    "project_id": "storytoonpic",
+    "storage_bucket": "storytoonpic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140103544892:android:ed21409c92ae9ea91c5339",
+        "android_client_info": {
+          "package_name": "com.example.storytoonpic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALBzCoYwEa_kfED_zvkLHPEQ8RMP8o9t8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
