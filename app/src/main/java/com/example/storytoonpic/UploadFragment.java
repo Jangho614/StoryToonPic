@@ -34,6 +34,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 
+
 public class UploadFragment extends Fragment {
     private static final int REQUEST_PICK_IMAGE = 102;
     private static final int MAX_IMAGES = 4;
@@ -243,6 +244,7 @@ public class UploadFragment extends Fragment {
             }
         });
     }
+
 
     private void connectWS(String id) {
         HttpUrl httpUrl = new HttpUrl.Builder()

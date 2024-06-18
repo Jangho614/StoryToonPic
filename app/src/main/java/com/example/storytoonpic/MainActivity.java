@@ -1,6 +1,7 @@
 package com.example.storytoonpic;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,9 +9,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -30,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageView selectedHome;
     private ImageView selectedUpload;
 
-
+    public static class Utils{
+        public void showToast(Context context){
+            Toast.makeText(context, "완성", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -173,4 +181,5 @@ public class MainActivity extends AppCompatActivity {
         selectedImageView.startAnimation(animate);
         selectedImageView.setVisibility(View.INVISIBLE);
     }
+
 }
