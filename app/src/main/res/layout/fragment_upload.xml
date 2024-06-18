@@ -19,7 +19,8 @@
             android:layout_width="280dp"
             android:layout_height="70dp"
             android:src="@drawable/upload_title"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="60dp"
+            android:layout_marginTop="-130dp"
             android:contentDescription="Upload Your Images!" />
 
         <!-- Image upload area -->
@@ -146,7 +147,7 @@
             android:id="@+id/upload_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/donebtn_desgin"
             android:text="Upload"
             android:textColor="#000000" />

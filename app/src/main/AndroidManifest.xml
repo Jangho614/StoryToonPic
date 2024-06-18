@@ -17,14 +17,14 @@
             android:name=".LoginActivity"
             android:exported="true"/>
         <activity
-            android:name=".StartActivity"
+            android:name=".MainActivity"
             android:exported="true"/>
         <activity
             android:name=".SignupActivity"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="false"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".StartActivity"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="true">
             <intent-filter>
