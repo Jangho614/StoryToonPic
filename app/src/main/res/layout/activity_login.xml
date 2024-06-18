@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
-    tools:context=".SignupActivity">
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/login_title"
@@ -19,8 +19,8 @@
         app:layout_constraintVertical_bias="0.355"
         app:srcCompat="@drawable/login_title" />
 
-    <EditText
-        android:id="@+id/signUp_pw"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/login_pw"
         android:layout_width="324dp"
         android:layout_height="55dp"
 
@@ -30,12 +30,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/signUp_email"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/login_email"
         android:layout_width="324dp"
         android:layout_height="55dp"
         android:background="@drawable/input_text_design"
-        app:layout_constraintTop_toBottomOf="@+id/signUp_pw"
+        app:layout_constraintTop_toBottomOf="@+id/login_pw"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="50dp"/>
@@ -64,11 +64,11 @@
         android:layout_height="30dp"
         android:background="@drawable/pw_visi_btn"
 
-        app:layout_constraintBottom_toBottomOf="@+id/signUp_email"
-        app:layout_constraintEnd_toEndOf="@+id/signUp_email"
+        app:layout_constraintBottom_toBottomOf="@+id/login_email"
+        app:layout_constraintEnd_toEndOf="@+id/login_email"
         app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toStartOf="@+id/signUp_email"
-        app:layout_constraintTop_toTopOf="@+id/signUp_email"/>
+        app:layout_constraintStart_toStartOf="@+id/login_email"
+        app:layout_constraintTop_toTopOf="@+id/login_email"/>
 
 
     <TextView
@@ -78,8 +78,8 @@
         android:layout_marginStart="28dp"
         android:text="Email"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/signUp_pw"
-        app:layout_constraintStart_toStartOf="@+id/signUp_pw" />
+        app:layout_constraintBottom_toTopOf="@+id/login_pw"
+        app:layout_constraintStart_toStartOf="@+id/login_pw" />
 
     <TextView
         android:id="@+id/textPw"
@@ -88,8 +88,8 @@
         android:layout_marginStart="28dp"
         android:text="Password"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/signUp_email"
-        app:layout_constraintStart_toStartOf="@+id/signUp_email" />
+        app:layout_constraintBottom_toTopOf="@+id/login_email"
+        app:layout_constraintStart_toStartOf="@+id/login_email" />
 
     <TextView
         android:id="@+id/already_hav"
@@ -130,6 +130,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.03"
         app:srcCompat="@drawable/logo" />
+
+    <ProgressBar
+        android:id="@+id/progressBarl"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

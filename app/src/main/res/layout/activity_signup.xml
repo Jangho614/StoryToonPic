@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.167"
         app:srcCompat="@drawable/signup_title" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/signUp_name"
         android:layout_width="324dp"
         android:layout_height="55dp"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@+id/signUp_pw"
         android:layout_marginTop="220dp"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/signUp_pw"
         android:layout_width="324dp"
         android:layout_height="55dp"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUp_name" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/signUp_email"
         android:layout_width="324dp"
         android:layout_height="55dp"
@@ -56,7 +56,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/SginUp_btn"
+        android:id="@+id/signUp_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/signup_btn_design"
@@ -125,7 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SginUp_btn"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_btn"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -141,8 +141,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/already_hav"
-        app:layout_constraintTop_toBottomOf="@+id/SginUp_btn"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_btn"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
