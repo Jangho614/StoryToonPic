@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignupActivity extends AppCompatActivity {
-    TextInputEditText editEmail, editPwd, editName;
+    EditText editEmail, editPwd, editName;
     AppCompatButton signUpBtn;
 
     FirebaseAuth mAuth;
@@ -71,9 +72,8 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
                 String password, email, name;
-                name = String.valueOf(editName.getText());
                 email = String.valueOf(editEmail.getText());
-                password = String.valueOf(editEmail.getText());
+                password = String.valueOf(editPwd.getText());
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(SignupActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
@@ -81,10 +81,6 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 if(TextUtils.isEmpty(password)){
                     Toast.makeText(SignupActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(name)){
-                    Toast.makeText(SignupActivity.this, "Enter Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 mAuth.createUserWithEmailAndPassword(email, password)

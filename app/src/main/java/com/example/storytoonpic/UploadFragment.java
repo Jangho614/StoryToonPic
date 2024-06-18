@@ -29,6 +29,7 @@ public class UploadFragment extends Fragment {
     private ImageView[] uploadedImageViews = new ImageView[MAX_IMAGES];
     private TextView[] uploadTextViews = new TextView[MAX_IMAGES];
     private TextView uploadStatusTextView;
+//    private TextView uploadimg1, uploadimg2,uploadimg3, uploadimg4;
 
     @Nullable
     @Override
@@ -42,6 +43,19 @@ public class UploadFragment extends Fragment {
         }
 
         uploadStatusTextView = view.findViewById(R.id.upload_status);
+//        uploadimg1 = view.findViewById(R.id.upload_text1);
+//        uploadimg2 = view.findViewById(R.id.upload_text2);
+//        uploadimg3 = view.findViewById(R.id.upload_text3);
+//        uploadimg4 = view.findViewById(R.id.upload_text4);
+//
+//        uploadimg1.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                openGallery();
+//            }
+//        });
+
+
 
         view.findViewById(R.id.upload_button).setOnClickListener(new View.OnClickListener() {
             @Override
