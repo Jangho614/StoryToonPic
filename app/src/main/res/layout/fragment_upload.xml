@@ -1,78 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:context=".UploadFragment">
 
-
-    <!-- Upload status pop-up window -->
-    <FrameLayout
-        android:id="@+id/upload_status_popup"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:gravity="center">
-
-        <!-- Background overlay -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#80000000" />
-
-        <!-- Pop-up window with text -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="20dp"
-            android:elevation="4dp">
-
-            <!-- Text view -->
-            <TextView
-                android:id="@+id/upload_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upload Successful"
-                android:textColor="@android:color/holo_green_dark"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-    </FrameLayout>
-
-    <!-- Your existing UI elements -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:orientation="vertical">
+        android:padding="16dp">
 
-        <!-- Upload button -->
+        <!-- ImageView for Upload Images instruction -->
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/upload_instruction_image"
             android:layout_width="280dp"
             android:layout_height="70dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/upload_title" />
+            android:src="@drawable/upload_title"
+            android:layout_marginBottom="70dp"
+            android:contentDescription="Upload Your Images!" />
 
         <!-- Image upload area -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:layout_gravity="center">
 
-            <!-- First image upload -->
+            <!-- Four image upload slots -->
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:layout_weight="1">
-
+                android:id="@+id/frame_image_1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/border_background">
                 <ImageView
                     android:id="@+id/uploaded_image1"
                     android:layout_width="match_parent"
@@ -80,29 +44,26 @@
                     android:contentDescription="Uploaded Image"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
-
                 <TextView
                     android:id="@+id/upload_text1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="8dp"
-                    android:text="Upload Your Image!"
-                    android:clickable="true"
+                    android:padding="40dp"
                     android:textAlignment="center"
+                    android:text="Click to upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />
             </FrameLayout>
-
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:layout_weight="1">
-
+                android:id="@+id/frame_image_2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/border_background">
                 <ImageView
                     android:id="@+id/uploaded_image2"
                     android:layout_width="match_parent"
@@ -110,37 +71,26 @@
                     android:contentDescription="Uploaded Image"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
-
                 <TextView
                     android:id="@+id/upload_text2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="8dp"
-                    android:clickable="true"
-                    android:text="Upload Your Image!"
+                    android:padding="40dp"
                     android:textAlignment="center"
+                    android:text="Click to upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />
             </FrameLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:layout_weight="1">
-
+                android:id="@+id/frame_image_3"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/border_background">
                 <ImageView
                     android:id="@+id/uploaded_image3"
                     android:layout_width="match_parent"
@@ -148,29 +98,26 @@
                     android:contentDescription="Uploaded Image"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
-
                 <TextView
                     android:id="@+id/upload_text3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="8dp"
-                    android:clickable="true"
-                    android:text="Upload Your Image!"
+                    android:padding="40dp"
                     android:textAlignment="center"
+                    android:text="Click to upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />
             </FrameLayout>
-
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:layout_weight="1">
-
+                android:id="@+id/frame_image_4"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/border_background">
                 <ImageView
                     android:id="@+id/uploaded_image4"
                     android:layout_width="match_parent"
@@ -178,35 +125,30 @@
                     android:contentDescription="Uploaded Image"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
-
                 <TextView
                     android:id="@+id/upload_text4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="8dp"
-                    android:clickable="true"
-                    android:text="Upload Your Image!"
+                    android:padding="40dp"
                     android:textAlignment="center"
+                    android:text="Click to upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />
             </FrameLayout>
-
-        </LinearLayout>
+        </GridLayout>
 
         <!-- Upload button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/upload_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/donebtn_desgin"
             android:text="Upload"
             android:textColor="#000000" />
-
     </LinearLayout>
-
 </FrameLayout>

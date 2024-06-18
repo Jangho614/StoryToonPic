@@ -18,6 +18,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.example.storytoonpic.R;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,116 +30,133 @@ public class UploadFragment extends Fragment {
     private List<Uri> selectedImageUris = new ArrayList<>();
     private ImageView[] uploadedImageViews = new ImageView[MAX_IMAGES];
     private TextView[] uploadTextViews = new TextView[MAX_IMAGES];
-    private TextView uploadStatusTextView;
-//    private TextView uploadimg1, uploadimg2,uploadimg3, uploadimg4;
+    private View[] imageFrames = new View[MAX_IMAGES];
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upload, container, false);
 
-        // Initialize image views and text views
+        // Initialize image views, text views, and frames
         for (int i = 0; i < MAX_IMAGES; i++) {
-            uploadedImageViews[i] = view.findViewById(getResources().getIdentifier("uploaded_image" + (i + 1), "id", getActivity().getPackageName()));
-            uploadTextViews[i] = view.findViewById(getResources().getIdentifier("upload_text" + (i + 1), "id", getActivity().getPackageName()));
+            int imageViewId = getResources().getIdentifier("uploaded_image" + (i + 1), "id", getActivity().getPackageName());
+            int textViewId = getResources().getIdentifier("upload_text" + (i + 1), "id", getActivity().getPackageName());
+            int frameId = getResources().getIdentifier("frame_image_" + (i + 1), "id", getActivity().getPackageName());
+
+            uploadedImageViews[i] = view.findViewById(imageViewId);
+            uploadTextViews[i] = view.findViewById(textViewId);
+            imageFrames[i] = view.findViewById(frameId);
+
+            final int index = i;
+            imageFrames[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openGallery(index);
+                }
+            });
         }
-
-        uploadStatusTextView = view.findViewById(R.id.upload_status);
-//        uploadimg1 = view.findViewById(R.id.upload_text1);
-//        uploadimg2 = view.findViewById(R.id.upload_text2);
-//        uploadimg3 = view.findViewById(R.id.upload_text3);
-//        uploadimg4 = view.findViewById(R.id.upload_text4);
-//
-//        uploadimg1.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                openGallery();
-//            }
-//        });
-
-
 
         view.findViewById(R.id.upload_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                if (selectedImageUris.size() == MAX_IMAGES) {
+                    showUploadStatusPopup();
+                } else {
+                    showImageCountWarning();
+                }
             }
         });
 
         return view;
     }
 
-    private void openGallery() {
+    private void openGallery(int index) {
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
-        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), REQUEST_PICK_IMAGE);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), REQUEST_PICK_IMAGE + index);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_PICK_IMAGE && data != null) {
-            if (data.getClipData() != null) {
-                int count = Math.min(data.getClipData().getItemCount(), MAX_IMAGES);
-                for (int i = 0; i < count; i++) {
-                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                    selectedImageUris.add(imageUri);
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), imageUri);
-                        int nextIndex = getNextAvailableImageViewIndex();
-                        if (nextIndex != -1) {
-                            uploadedImageViews[nextIndex].setImageBitmap(bitmap);
-                            uploadedImageViews[nextIndex].setVisibility(View.VISIBLE);
-                            uploadTextViews[nextIndex].setVisibility(View.GONE);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            int index = requestCode - REQUEST_PICK_IMAGE;
+            if (index >= 0 && index < MAX_IMAGES) {
+                Uri selectedImageUri = data.getData();
+                if (selectedImageUris.contains(selectedImageUri)) {
+                    showDuplicateImageWarning();
+                    return;
                 }
-                showUploadStatusPopup();
+                if (selectedImageUris.size() >= MAX_IMAGES) {
+                    showImageCountWarning();
+                    return;
+                }
+                selectedImageUris.add(selectedImageUri);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
+                    uploadedImageViews[index].setImageBitmap(bitmap);
+                    uploadedImageViews[index].setVisibility(View.VISIBLE);
+                    uploadTextViews[index].setVisibility(View.GONE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
-
-    private int getNextAvailableImageViewIndex() {
-        for (int i = 0; i < uploadedImageViews.length; i++) {
-            if (uploadedImageViews[i].getDrawable() == null) {
-                return i;
-            }
-        }
-        return -1; // No available ImageView found
     }
 
     private void showUploadStatusPopup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-
-        // Inflate the layout for the dialog
-        View dialogView = getLayoutInflater().inflate(R.layout.upload_status_dialog, null);
-        ImageView imageView = dialogView.findViewById(R.id.upload_status_image);
-        imageView.setImageResource(R.drawable.uploadsuccess);
-
-        builder.setView(dialogView)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                        resetImages();
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-        // Set dialog background color and rounded corners
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#95FAAB")));
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Upload Status");
+        builder.setMessage("All images uploaded successfully!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                // 업로드 성공 후 이미지 초기화
+                resetUploadedImages();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-    private void resetImages() {
+    // 업로드된 이미지 초기화
+    private void resetUploadedImages() {
+        selectedImageUris.clear(); // 선택된 이미지 목록 초기화
         for (int i = 0; i < MAX_IMAGES; i++) {
-            uploadedImageViews[i].setImageDrawable(null);
-            uploadedImageViews[i].setVisibility(View.GONE);
-            uploadTextViews[i].setVisibility(View.VISIBLE);
+            uploadedImageViews[i].setImageDrawable(null); // 이미지뷰 초기화
+            uploadedImageViews[i].setVisibility(View.GONE); // 이미지뷰 숨기기
+            uploadTextViews[i].setVisibility(View.VISIBLE); // 텍스트뷰 보이기
         }
-        selectedImageUris.clear();
+    }
+
+
+
+    private void showImageCountWarning() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Warning");
+        builder.setMessage("Please upload exactly 4 images.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showDuplicateImageWarning() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Warning");
+        builder.setMessage("This image is already selected. Please select a different image.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
