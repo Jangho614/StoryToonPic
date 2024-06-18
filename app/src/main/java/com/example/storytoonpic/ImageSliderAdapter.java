@@ -1,6 +1,7 @@
 package com.example.storytoonpic;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,9 @@ import java.util.List;
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.ImageSliderViewHolder> {
 
     private Context context;
-    private List<Integer> images;
+    private List<Bitmap> images;
 
-    public ImageSliderAdapter(Context context, List<Integer> images) {
+    public ImageSliderAdapter(Context context, List<Bitmap> images) {
         this.context = context;
         this.images = images;
     }
@@ -30,13 +31,24 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ImageSliderViewHolder holder, int position) {
-        int imageResId = images.get(position);
-        holder.imageView.setImageResource(imageResId); // NullPointerException이 발생할 수 있는 곳
+        Bitmap bitmap = images.get(position);
+        holder.imageView.setImageBitmap(bitmap);
     }
 
     @Override
     public int getItemCount() {
         return images.size();
+    }
+
+    public void addItem(Bitmap image) {
+        images.add(image);
+        notifyItemInserted(images.size() - 1);
+    }
+
+    public void addItems(List<Bitmap> newImages) {
+        int startPosition = images.size();
+        images.addAll(newImages);
+        notifyItemRangeInserted(startPosition, newImages.size());
     }
 
     public static class ImageSliderViewHolder extends RecyclerView.ViewHolder {

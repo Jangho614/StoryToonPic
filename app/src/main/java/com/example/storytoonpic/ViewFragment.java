@@ -1,5 +1,6 @@
 package com.example.storytoonpic;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewFragment extends Fragment {
     public RecyclerView recyclerView;
-    ViewAdapter adapter = new ViewAdapter();
-
+    static ViewAdapter adapter = new ViewAdapter();
+    public static class addview{
+        public void additem(String title, String date, Bitmap img){
+            adapter.addItem(new ViewAdapter.Item(title, date, img));
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,9 +30,6 @@ public class ViewFragment extends Fragment {
                 false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-
-
 
 
         return view;

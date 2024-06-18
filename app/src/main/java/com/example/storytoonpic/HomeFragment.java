@@ -1,5 +1,6 @@
 package com.example.storytoonpic;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,18 @@ public class HomeFragment extends Fragment {
 
     ViewPager2 viewPager;
     ImageSliderAdapter sliderAdapter;
-    List<Integer> images = new ArrayList<>();
     private CircleIndicator3 indicator;
+    static List<Bitmap> images = new ArrayList<>();
+
+
+    public static class addimg{
+        public void additem(Bitmap im1, Bitmap im2, Bitmap im3, Bitmap im4){
+            images.add(im1);
+            images.add(im2);
+            images.add(im3);
+            images.add(im4);
+        }
+    }
 
     @Nullable
     @Override
@@ -31,8 +42,6 @@ public class HomeFragment extends Fragment {
         viewPager = view.findViewById(R.id.pager_images);
 
         // 이미지 추가
-
-
         sliderAdapter = new ImageSliderAdapter(requireContext(), images);
         viewPager.setAdapter(sliderAdapter);
         indicator = view.findViewById(R.id.indicator);

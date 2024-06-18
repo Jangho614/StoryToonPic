@@ -1,14 +1,24 @@
 package com.example.storytoonpic;
 
-import android.content.Context;
 
-import com.example.storytoonpic.MainActivity.Utils;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class WebsocketListener extends WebSocketListener {
+    LocalDateTime currentDateTime = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    String formattedDateTime = currentDateTime.format(formatter);
+    String currentTimeString = formattedDateTime;
+
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
@@ -46,8 +56,11 @@ public class WebsocketListener extends WebSocketListener {
         if(text.equals("---STORY END---")) {
             receiveMOD = "";
             webSocket.close(1000, "end");
-            Context MainActivity = null;
-            new Utils().showToast(MainActivity);
+//            new ViewFragment.addview().additem("title",currentTimeString,bitmap);
+//            new HomeFragment.addimg().additem(im1,im2,im3,im4);
+
+
+
         }
     }
 }
