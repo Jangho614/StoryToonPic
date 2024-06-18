@@ -5,6 +5,7 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 public class WebsocketListener extends WebSocketListener {
+
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         webSocket.send("Execute");
@@ -24,6 +25,14 @@ public class WebsocketListener extends WebSocketListener {
         }
         if(text.equals("done! please send 'GET /download_photo' request")) {
             webSocket.close(1000, "end");
+
+//           adapter.addItem(new ViewAdapter.Item("title", "date", bitmap));
+            // 4개 합쳐진거
+//            images.add(R.drawable.image1);
+//            images.add(R.drawable.image2);
+//            images.add(R.drawable.image3);
+//            images.add(R.drawable.image4);
+            //4개 따로
         }
     }
 }

@@ -10,25 +10,33 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import me.relex.circleindicator.CircleIndicator;
+import java.util.ArrayList;
+import java.util.List;
+
+import me.relex.circleindicator.CircleIndicator3;
 
 public class HomeFragment extends Fragment {
-    private static final String TAG = "ShopNewsActivity";
-    private ViewPager2 pager;
-    private ImgAdapter pagerAdapter;
-    private CircleIndicator indicator;
 
+    ViewPager2 viewPager;
+    ImageSliderAdapter sliderAdapter;
+    List<Integer> images = new ArrayList<>();
+    private CircleIndicator3 indicator;
+
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Fragment의 레이아웃을 inflate 합니다.
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Use getActivity() to get the context of the activity containing this fragment
-//        pager = view.findViewById(R.id.pager_images);
-//        pagerAdapter = new ImgAdapter(getActivity()); // Pass getActivity() as context
-//        pager.setAdapter(pagerAdapter);
-//
-//        indicator = view.findViewById(R.id.indicator);
-//        indicator.setViewPager(pager);
+        viewPager = view.findViewById(R.id.pager_images);
+
+        // 이미지 추가
+
+
+        sliderAdapter = new ImageSliderAdapter(requireContext(), images);
+        viewPager.setAdapter(sliderAdapter);
+        indicator = view.findViewById(R.id.indicator);
+        indicator.setViewPager(viewPager);
 
         return view;
     }
