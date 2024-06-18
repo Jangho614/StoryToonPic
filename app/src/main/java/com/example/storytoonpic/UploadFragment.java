@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,14 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.WebSocket;
 
 public class UploadFragment extends Fragment {
     private static final int REQUEST_PICK_IMAGE = 102;
@@ -30,10 +41,8 @@ public class UploadFragment extends Fragment {
     private ImageView[] uploadedImageViews = new ImageView[MAX_IMAGES];
     private TextView[] uploadTextViews = new TextView[MAX_IMAGES];
     private View[] imageFrames = new View[MAX_IMAGES];
-    ViewAdapter adapter = new ViewAdapter();
 
-    Bitmap[] uploadedImg = new Bitmap[MAX_IMAGES];
-    RecyclerView recyclerView;
+    OkHttpClient client = new OkHttpClient();
 
     @Nullable
     @Override
@@ -60,12 +69,12 @@ public class UploadFragment extends Fragment {
         }
 
         view.findViewById(R.id.upload_button).setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (selectedImageUris.size() == MAX_IMAGES) {
+                    postImage();
+                    connectWS("test"); // todo: change need
                     showUploadStatusPopup();
-
                 } else {
                     showImageCountWarning();
                 }
@@ -102,7 +111,6 @@ public class UploadFragment extends Fragment {
                     uploadedImageViews[index].setImageBitmap(bitmap);
                     uploadedImageViews[index].setVisibility(View.VISIBLE);
                     uploadTextViews[index].setVisibility(View.GONE);
-                    uploadedImg[index] = bitmap;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -118,11 +126,6 @@ public class UploadFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                // 업로드 성공 후 이미지 초기화
-                for (int i = 0; i < MAX_IMAGES; i++) {
-                    adapter.addItem(new ViewAdapter.Item("Image " + (i + 1), "2024-06-19", uploadedImg[i]));
-                }
-
                 resetUploadedImages();
             }
         });
@@ -139,7 +142,6 @@ public class UploadFragment extends Fragment {
             uploadTextViews[i].setVisibility(View.VISIBLE); // 텍스트뷰 보이기
         }
     }
-
 
 
     private void showImageCountWarning() {
@@ -169,4 +171,92 @@ public class UploadFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    private void showFailedImageWarning() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Warning");
+        builder.setMessage("Upload failed. Please try again.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void postImage() {
+        // OkHttpClient 인스턴스 생성
+        OkHttpClient client = new OkHttpClient();
+
+        // URL 빌더를 사용해 HttpUrl 생성
+        HttpUrl httpUrl = new HttpUrl.Builder()
+                .scheme("http") // 혹은 "https" 사용
+                .host("211.34.216.22") // 211.34.216.22
+                .port(5232)
+                .addPathSegment("upload_photo")
+                .addQueryParameter("id", "test")
+                .build();
+
+        // MultipartBody 생성
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        selectedImageUris.forEach(uri -> {
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                builder.addFormDataPart("files", "image.jpg",
+                        RequestBody.create(byteArray, MediaType.parse("image/*jpg")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        RequestBody requestBody = builder.build();
+
+        // Request 생성
+        Request request = new Request.Builder()
+                .url(httpUrl) // TODO: USER IDENTIFY NAME NEEDED
+                .post(requestBody)
+                .build();
+
+        // 비동기 요청
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                // 네트워크 요청 실패 처리
+                System.out.println("Request failed");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    // 성공적인 응답 처리
+                    String responseData = response.body().string();
+                    System.out.println("Response success: " + responseData);
+                } else {
+                    // 실패 응답 처리
+                    System.out.println("Response failed");
+                }
+            }
+        });
+    }
+
+    private void connectWS(String id) {
+        HttpUrl httpUrl = new HttpUrl.Builder()
+                .scheme("http") // 혹은 "https" 사용
+                .host("211.34.216.22") // 211.34.216.22
+                .port(5232)
+                .addPathSegment("ws")
+                .addPathSegment(id)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(httpUrl)
+                .build();
+        WebSocket websocket = client.newWebSocket(request, new WebsocketListener());
+    }
+
 }
