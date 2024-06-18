@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.storytoonpic.MainActivity">
 
-    <!-- 프래그먼트 컨테이너 -->
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
