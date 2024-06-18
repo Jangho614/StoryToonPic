@@ -1,10 +1,7 @@
 package com.example.storytoonpic;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
-    private DocumentFragment fd;
+    private ViewFragment fd;
     private HomeFragment fh;
     private UploadFragment fu;
 
@@ -44,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
-        fd = new DocumentFragment();
+        fd = new ViewFragment();
         fh = new HomeFragment();
         fu = new UploadFragment();
 

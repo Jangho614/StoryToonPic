@@ -54,7 +54,7 @@
                     android:fontFamily="sans-serif"
                     android:padding="40dp"
                     android:textAlignment="center"
-                    android:text="Click to upload"
+                    android:text="Click to Upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />
@@ -81,7 +81,7 @@
                     android:fontFamily="sans-serif"
                     android:padding="40dp"
                     android:textAlignment="center"
-                    android:text="Click to upload"
+                    android:text="Click to Upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />
@@ -108,7 +108,7 @@
                     android:fontFamily="sans-serif"
                     android:padding="40dp"
                     android:textAlignment="center"
-                    android:text="Click to upload"
+                    android:text="Click to Upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />
@@ -135,7 +135,7 @@
                     android:fontFamily="sans-serif"
                     android:padding="40dp"
                     android:textAlignment="center"
-                    android:text="Click to upload"
+                    android:text="Click to Upload"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:visibility="visible" />

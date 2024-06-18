@@ -5,8 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.example.storytoonpic.R;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +30,10 @@ public class UploadFragment extends Fragment {
     private ImageView[] uploadedImageViews = new ImageView[MAX_IMAGES];
     private TextView[] uploadTextViews = new TextView[MAX_IMAGES];
     private View[] imageFrames = new View[MAX_IMAGES];
+    ViewAdapter adapter = new ViewAdapter();
+
+    Bitmap[] uploadedImg = new Bitmap[MAX_IMAGES];
+    RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -57,10 +60,12 @@ public class UploadFragment extends Fragment {
         }
 
         view.findViewById(R.id.upload_button).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if (selectedImageUris.size() == MAX_IMAGES) {
                     showUploadStatusPopup();
+
                 } else {
                     showImageCountWarning();
                 }
@@ -97,6 +102,7 @@ public class UploadFragment extends Fragment {
                     uploadedImageViews[index].setImageBitmap(bitmap);
                     uploadedImageViews[index].setVisibility(View.VISIBLE);
                     uploadTextViews[index].setVisibility(View.GONE);
+                    uploadedImg[index] = bitmap;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -113,6 +119,10 @@ public class UploadFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 // 업로드 성공 후 이미지 초기화
+                for (int i = 0; i < MAX_IMAGES; i++) {
+                    adapter.addItem(new ViewAdapter.Item("Image " + (i + 1), "2024-06-19", uploadedImg[i]));
+                }
+
                 resetUploadedImages();
             }
         });
