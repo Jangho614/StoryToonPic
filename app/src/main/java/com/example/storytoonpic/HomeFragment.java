@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,9 @@ public class HomeFragment extends Fragment {
     ImageSliderAdapter sliderAdapter;
     private CircleIndicator3 indicator;
     static List<Bitmap> images = new ArrayList<>();
+    TextView titlev,datev,contentv;
+    String title,date,content;
+
 
 
     public static class addimg{
@@ -31,6 +35,7 @@ public class HomeFragment extends Fragment {
             images.add(im3);
             images.add(im4);
         }
+
     }
 
     @Nullable
@@ -47,6 +52,16 @@ public class HomeFragment extends Fragment {
         indicator = view.findViewById(R.id.indicator);
         indicator.setViewPager(viewPager);
 
+        titlev = view.findViewById(R.id.home_titleText);
+        datev = view.findViewById(R.id.home_day);
+        contentv = view.findViewById(R.id.home_content);
+        titlev.setText("Title : ");
+        datev.setText("Date : ");
+        contentv.setText("Content : ");
+
         return view;
+    }
+
+    private String gettitle() {
     }
 }
