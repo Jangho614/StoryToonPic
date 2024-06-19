@@ -55,9 +55,11 @@ public class HomeFragment extends Fragment {
         titlev = view.findViewById(R.id.home_titleText);
         datev = view.findViewById(R.id.home_day);
         contentv = view.findViewById(R.id.home_content);
+
+
         titlev.setText("Title : ");
         datev.setText("Date : ");
-        contentv.setText("Content : ");
+        contentv.setText("Content : " + content);
 
         return view;
     }

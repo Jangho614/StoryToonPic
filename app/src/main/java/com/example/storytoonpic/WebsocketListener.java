@@ -76,8 +76,9 @@ public class WebsocketListener extends WebSocketListener {
             // 스토리 스트링
             story = story;
 
-//            new ViewFragment.addview().additem("title",currentTimeString,bitmap);
-//            new HomeFragment.addimg().additem(im1,im2,im3,im4);
+
+            new ViewFragment.addview().additem("title",currentTimeString,imgList.get(4));
+            new HomeFragment.addimg().additem(imgList.get(0),imgList.get(1),imgList.get(2),imgList.get(3));
         }
     }
 }
