@@ -59,16 +59,28 @@ public class HomeFragment extends Fragment {
         datev = view.findViewById(R.id.home_day);
         contentv = view.findViewById(R.id.home_content);
 
+        images.clear();
         Bitmap im0 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
         Bitmap im1 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
         Bitmap im2 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
         Bitmap im3 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+        System.out.println(State.images);
+        if(!State.images.isEmpty()){
+            im0 = State.images.get(0);
+            im1 = State.images.get(1);
+            im2 = State.images.get(2);
+            im3 = State.images.get(3);
+        }
         //im0~3 = imgList.get(0~3);
         //content = Story;
         images.add(im0);
         images.add(im1);
         images.add(im2);
         images.add(im3);
+
+        if(!State.story.isEmpty()) {
+            content = State.story;
+        }
 
         titlev.setText("Title : " + title);
         contentv.setText("Content: " + content);

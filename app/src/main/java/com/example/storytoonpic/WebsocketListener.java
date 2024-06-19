@@ -16,10 +16,7 @@ import okio.ByteString;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WebsocketListener extends WebSocketListener {
-
     String receiveMOD = "";
-    ArrayList<Bitmap> imgList = new ArrayList();
-    String story = "";
 
 
     @Override
@@ -32,8 +29,8 @@ public class WebsocketListener extends WebSocketListener {
         if(receiveMOD.equals("IMAGE")) {
             byte[] imageBytes = byteString.toByteArray();
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            imgList.add(bitmap);
-
+            State.images.add(bitmap);
+            System.out.println(State.images);
         }
     }
 
@@ -52,21 +49,20 @@ public class WebsocketListener extends WebSocketListener {
         }
         if(text.equals("---IMAGE START---")) {
             receiveMOD = "IMAGE";
+            State.images.clear();
         }
-
         if(text.equals("---IMAGE END---")) {
             receiveMOD = "";
         }
         if(text.equals("---STORY START---")) {
             receiveMOD = "STORY";
         }
-        if(receiveMOD.equals("STORY")) {
-            story = text;
-        }
         if(text.equals("---STORY END---")) {
-            receiveMOD = "";
-
             webSocket.close(1000, "end");
+            receiveMOD = "";
+        }
+        if(receiveMOD.equals("STORY")) {
+            State.story = text;
         }
     }
 
