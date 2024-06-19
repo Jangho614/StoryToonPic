@@ -7,8 +7,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import okhttp3.Response;
@@ -18,10 +16,7 @@ import okio.ByteString;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WebsocketListener extends WebSocketListener {
-    LocalDateTime currentDateTime = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    String formattedDateTime = currentDateTime.format(formatter);
-    String currentTimeString = formattedDateTime;
+
     String receiveMOD = "";
     ArrayList<Bitmap> imgList = new ArrayList();
     String story = "";
@@ -38,6 +33,7 @@ public class WebsocketListener extends WebSocketListener {
             byte[] imageBytes = byteString.toByteArray();
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
             imgList.add(bitmap);
+
         }
     }
 
@@ -69,16 +65,10 @@ public class WebsocketListener extends WebSocketListener {
         }
         if(text.equals("---STORY END---")) {
             receiveMOD = "";
+
             webSocket.close(1000, "end");
-
-            // 비트맵 배열리스트
-            imgList = imgList;
-            // 스토리 스트링
-            story = story;
-
-
-            new ViewFragment.addview().additem("title",currentTimeString,imgList.get(4));
-            new HomeFragment.addimg().additem(imgList.get(0),imgList.get(1),imgList.get(2),imgList.get(3));
         }
     }
+
+
 }
