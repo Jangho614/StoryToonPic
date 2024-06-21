@@ -6,6 +6,13 @@
     android:background="#FFFFFF"
     tools:context=".UploadFragment">
 
+    <ProgressBar
+        android:id="@+id/progressBarup"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,7 +59,7 @@
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="40dp"
+                    android:padding="43dp"
                     android:textAlignment="center"
                     android:text="Click to Upload"
                     android:textColor="#000000"
@@ -79,7 +86,7 @@
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="40dp"
+                    android:padding="43dp"
                     android:textAlignment="center"
                     android:text="Click to Upload"
                     android:textColor="#000000"
@@ -106,7 +113,7 @@
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="40dp"
+                    android:padding="43dp"
                     android:textAlignment="center"
                     android:text="Click to Upload"
                     android:textColor="#000000"
@@ -133,7 +140,7 @@
                     android:layout_gravity="center"
                     android:background="#80FFFFFF"
                     android:fontFamily="sans-serif"
-                    android:padding="40dp"
+                    android:padding="43dp"
                     android:textAlignment="center"
                     android:text="Click to Upload"
                     android:textColor="#000000"
@@ -149,7 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/donebtn_desgin"
-            android:text="Upload"
+            android:text="업로드"
             android:textColor="#000000" />
     </LinearLayout>
 </FrameLayout>

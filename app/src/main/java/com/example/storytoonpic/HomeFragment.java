@@ -1,12 +1,15 @@
 package com.example.storytoonpic;
 
+import static com.example.storytoonpic.ViewFragment.adapter;
+
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,8 +23,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.relex.circleindicator.CircleIndicator3;
-
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class HomeFragment extends Fragment {
 
@@ -32,15 +33,16 @@ public class HomeFragment extends Fragment {
 
     ViewPager2 viewPager;
     static ImageSliderAdapter sliderAdapter;
-    private CircleIndicator3 indicator;
     static List<Bitmap> images = new ArrayList<>();
-    TextView titlev, datev, contentv;
+    TextView datev, contentv;
     String date = currentTimeString;
+    Button toViewBtn;
 
     String title, content;
     Bitmap im0,im1,im2,im3;
 
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,18 +54,14 @@ public class HomeFragment extends Fragment {
         // 이미지 추가
         sliderAdapter = new ImageSliderAdapter(requireContext(), images);
         viewPager.setAdapter(sliderAdapter);
-        indicator = view.findViewById(R.id.indicator);
-        indicator.setViewPager(viewPager);
 
-        titlev = view.findViewById(R.id.home_titleText);
+        toViewBtn = view.findViewById(R.id.view_upload_btn);
+
         datev = view.findViewById(R.id.home_day);
         contentv = view.findViewById(R.id.home_content);
 
         images.clear();
-        Bitmap im0 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        Bitmap im1 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        Bitmap im2 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        Bitmap im3 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
+
         System.out.println(State.images);
         if(!State.images.isEmpty()){
             im0 = State.images.get(0);
@@ -81,13 +79,17 @@ public class HomeFragment extends Fragment {
         if(!State.story.isEmpty()) {
             content = State.story;
         }
-
-        titlev.setText("Title : " + title);
         contentv.setText("Content: " + content);
         datev.setText("Date : " + date);
+
+        toViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.addItem(new ViewAdapter.Item(content, date, im0,im1,im2,im3));
+            }
+        });
 
 
         return view;
     }
-
 }

@@ -7,8 +7,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.util.ArrayList;
-
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
@@ -45,6 +43,7 @@ public class WebsocketListener extends WebSocketListener {
             // todo: 그림 다그림
         }
         if(text.equals("writing story")) {
+
             // todo: 스토리 짜는 중
         }
         if(text.equals("---IMAGE START---")) {
@@ -60,6 +59,7 @@ public class WebsocketListener extends WebSocketListener {
         if(text.equals("---STORY END---")) {
             webSocket.close(1000, "end");
             receiveMOD = "";
+
         }
         if(receiveMOD.equals("STORY")) {
             State.story = text;

@@ -1,7 +1,6 @@
 package com.example.storytoonpic;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,11 +41,6 @@ public class ViewFragment extends Fragment {
                 false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-        Bitmap im4 = BitmapFactory.decodeResource(getResources(), R.drawable.logo);
-        //im4 = imgList.get(4);
-        adapter.addItem(new ViewAdapter.Item(title, date, im4));
-
 
         return view;
     }

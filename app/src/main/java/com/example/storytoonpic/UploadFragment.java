@@ -1,5 +1,6 @@
 package com.example.storytoonpic;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +41,7 @@ import okhttp3.WebSocket;
 
 
 public class UploadFragment extends Fragment {
+    ProgressBar progressBar;
     private static final int REQUEST_PICK_IMAGE = 102;
     private static final int MAX_IMAGES = 4;
     private List<Uri> selectedImageUris = new ArrayList<>();
@@ -47,10 +51,43 @@ public class UploadFragment extends Fragment {
 
     OkHttpClient client = new OkHttpClient();
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upload, container, false);
+        progressBar = view.findViewById(R.id.progressBarup);
+
+        Bundle dp = getArguments();
+        if (dp != null) {
+            String receivedData = dp.getString("dp");
+            Toast.makeText(getActivity(), receivedData, Toast.LENGTH_SHORT).show();
+        }
+        Bundle dc= getArguments();
+        if (dc != null) {
+            String receivedData = dc.getString("dc");
+            Toast.makeText(getActivity(), receivedData, Toast.LENGTH_SHORT).show();
+        }
+        Bundle mi = getArguments();
+        if (mi != null) {
+            String receivedData = mi.getString("mi");
+            Toast.makeText(getActivity(), receivedData, Toast.LENGTH_SHORT).show();
+        }
+        Bundle mic = getArguments();
+        if (mic != null) {
+            String receivedData = mic.getString("mic");
+            Toast.makeText(getActivity(), receivedData, Toast.LENGTH_SHORT).show();
+        }
+        Bundle ss = getArguments();
+        if (ss != null) {
+            String receivedData = ss.getString("ss");
+            Toast.makeText(getActivity(), receivedData, Toast.LENGTH_SHORT).show();
+        }
+        Bundle se = getArguments();
+        if (se != null) {
+            String receivedData = se.getString("se");
+            Toast.makeText(getActivity(), receivedData, Toast.LENGTH_SHORT).show();
+        }
 
         // Initialize image views, text views, and frames
         for (int i = 0; i < MAX_IMAGES; i++) {
@@ -79,6 +116,7 @@ public class UploadFragment extends Fragment {
                     postImage();
                     connectWS("test"); // todo: change need
                     showUploadStatusPopup();
+                    progressBar.setVisibility(View.VISIBLE);
                 } else {
                     showImageCountWarning();
                 }
@@ -263,6 +301,7 @@ public class UploadFragment extends Fragment {
                 .url(httpUrl)
                 .build();
         WebSocket websocket = client.newWebSocket(request, new WebsocketListener());
+
     }
 
 }
